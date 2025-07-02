@@ -7,11 +7,11 @@ from decimal import Decimal
 import uuid
 import random
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.secret_key = '5c8cfd77d00b11e811aa8846d5e31706169d7ce082e62d3827ff65389c854792' # IMPORTANT: Change this to a strong, random key in production!
 
 # AWS Setup using IAM Role
-REGION = 'ap-south-1'  # Replace with your actual AWS region
+REGION = 'us-east-1'  # Replace with your actual AWS region
 dynamodb = boto3.resource('dynamodb', region_name=REGION)
 sns_client = boto3.client('sns', region_name=REGION)
 
@@ -19,7 +19,7 @@ users_table = dynamodb.Table('travelgo_users')
 trains_table = dynamodb.Table('trains') # Note: This table is declared but not used in the provided routes.
 bookings_table = dynamodb.Table('bookings')
 
-SNS_TOPIC_ARN = 'arn:aws:sns:ap-south-1:353250843450:TravelBooking:c491f92a-a668-4b71-aee8-dcfcf990cdef'  # Replace with actual SNS topic ARN
+SNS_TOPIC_ARN = 'arn:aws:sns:us-east-1:980921721158:TravelGo:b31e1a38-d326-4708-a8ae-551c51d57a81'  # Replace with actual SNS topic ARN
 
 # Function to send SNS notifications
 # This function is duplicated in the original code, removing the duplicate.
@@ -515,6 +515,6 @@ def cancel_booking():
     return redirect(url_for('dashboard'))
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     # IMPORTANT: In a production environment, disable debug mode and specify a production-ready host.
     app.run(debug=True, host='0.0.0.0')
